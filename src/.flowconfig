@@ -1,0 +1,13 @@
+[ignore]
+*/node_modules/webidl2/*
+
+[include]
+../node_modules/commander/*
+../node_modules/rx/*
+../node_modules/webidl2/*
+../node_modules/glob/*
+
+[libs]
+../flow-libs
+
+[options]
