@@ -1,7 +1,7 @@
 /* @flow */
 
 import Rx from 'rx';
-import WebIDL2 from 'webidl2';
+import WebIDL2 from '@motiz88/webidl2';
 
 export
 default

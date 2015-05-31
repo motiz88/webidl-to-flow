@@ -3,7 +3,6 @@
 import Rx from 'rx';
 import translateRoot from './translate/root';
 import preprocessAst from './preprocessAst';
-import t from './FormattingToken';
 import postprocessTokens from './postprocessTokens';
 
 export

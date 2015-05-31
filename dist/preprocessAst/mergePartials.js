@@ -22,10 +22,6 @@ var _assert = require('assert');
 
 var _assert2 = _interopRequireDefault(_assert);
 
-var _util = require('util');
-
-var _util2 = _interopRequireDefault(_util);
-
 /// mergePartials merges all `partial` declarations.
 /// The resulting sequence contains no nodes marked `partial`.
 

@@ -24,10 +24,6 @@ var _preprocessAst = require('./preprocessAst');
 
 var _preprocessAst2 = _interopRequireDefault(_preprocessAst);
 
-var _FormattingToken = require('./FormattingToken');
-
-var _FormattingToken2 = _interopRequireDefault(_FormattingToken);
-
 var _postprocessTokens = require('./postprocessTokens');
 
 var _postprocessTokens2 = _interopRequireDefault(_postprocessTokens);

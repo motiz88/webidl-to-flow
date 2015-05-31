@@ -16,14 +16,14 @@ var _rx = require('rx');
 
 var _rx2 = _interopRequireDefault(_rx);
 
-var _webidl2 = require('webidl2');
+var _motiz88Webidl2 = require('@motiz88/webidl2');
 
-var _webidl22 = _interopRequireDefault(_webidl2);
+var _motiz88Webidl22 = _interopRequireDefault(_motiz88Webidl2);
 
 function parseIdlSource(idlSource) {
 	return _rx2['default'].Observable.create(function (observer) {
 		try {
-			observer.onNext(_webidl22['default'].parse(idlSource, { allowNestedTypedefs: true }));
+			observer.onNext(_motiz88Webidl22['default'].parse(idlSource, { allowNestedTypedefs: true }));
 		} catch (e) {
 			observer.onError(e);
 		}

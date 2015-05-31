@@ -47,8 +47,6 @@ var _url = require('url');
 
 var _url2 = _interopRequireDefault(_url);
 
-var rxReadFile = _rx2['default'].Observable.fromNodeCallback(_fs2['default'].readFile);
-
 function processIdlFiles(inputs) {
     _rx2['default'].Observable.from(inputs).concatMap(function (input) {
         if (input === '-') return _rx2['default'].Observable.of(process.stdin);else {
@@ -65,11 +63,7 @@ function processIdlFiles(inputs) {
         return _rxNode2['default'].fromReadableStream(readable).toArray().map(function (arr) {
             return arr.join('');
         });
-    })
-    // .concatMap(filename => rxReadFile(filename, {
-    //     encoding: 'utf8'
-    // }))
-    .concatMap(_parseIdlSource2['default']).concatMap(_translateIdlAst2['default']).forEach(function (s) {
+    }).concatMap(_parseIdlSource2['default']).concatMap(_translateIdlAst2['default']).forEach(function (s) {
         return process.stdout.write(s);
     }, function (err) {
         return console.error(err.stack || err);

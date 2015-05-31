@@ -10,8 +10,6 @@ import stream from 'stream';
 import request from 'request';
 import url from 'url';
 
-var rxReadFile = Rx.Observable.fromNodeCallback(fs.readFile);
-
 export
 default
 
@@ -36,9 +34,6 @@ function processIdlFiles(inputs: Array < string > ): void {
             return RxNode.fromReadableStream(readable)
                 .toArray().map(arr => arr.join(""));
         })
-        // .concatMap(filename => rxReadFile(filename, {
-        //     encoding: 'utf8'
-        // }))
         .concatMap(parseIdlSource)
         .concatMap(translateIdlAst)
         .forEach(s => process.stdout.write(s), err => console.error(err.stack || err), () => process.stdout.write('\n\n'));

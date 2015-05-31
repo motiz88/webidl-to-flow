@@ -1,7 +1,7 @@
 import Rx from 'rx';
 import unique from 'array-unique';
 import assert from 'assert';
-import util from 'util';
+
 /// mergePartials merges all `partial` declarations.
 /// The resulting sequence contains no nodes marked `partial`.
 export
