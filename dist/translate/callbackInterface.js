@@ -45,7 +45,7 @@ var literal = _rx2['default'].Observable.of;
 function translateCallbackInterface(node) {
     (0, _assert2['default'])(node.type === 'callback interface', 'Expected IdlCallbackInterface, found ' + node.type);
     (0, _assert2['default'])(!node.inheritance, 'IdlCallbackInterface should not have inheritance info here (AST should be preprocessed with flattenCallbackInterfaces)');
-    var decl = literal('/* WebIDL: ' + (node.partial ? 'partial ' : '') + '' + node.type + ' ' + node.name + ' */', _FormattingToken2['default'].newlineIndent, 'type ' + node.name + ' = ', _FormattingToken2['default'].openBrace).concat((0, _emitMembers2['default'])(_rx2['default'].Observable.from(node.members), _interfaceMember2['default'])).concat(literal(_FormattingToken2['default'].closeBrace));
+    var decl = literal(_FormattingToken2['default'].enterComment, 'WebIDL: ' + (node.partial ? 'partial ' : '') + '' + node.type + ' ' + node.name, _FormattingToken2['default'].exitComment, _FormattingToken2['default'].newlineIndent, 'type ' + node.name + ' = ', _FormattingToken2['default'].openBrace).concat((0, _emitMembers2['default'])(_rx2['default'].Observable.from(node.members), _interfaceMember2['default'])).concat(literal(_FormattingToken2['default'].closeBrace));
 
     // Is this a single operation callback interface?
     if (!node.members.some(function (subnode) {

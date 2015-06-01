@@ -25,7 +25,8 @@ function concretizeConstructors(astRoots: Rx.Observable): Rx.Observable {
                 root.members.unshift(...ctorAttrs.map(attr => Object.assign({
                     type: 'operation'
                 }, attr, {
-                    name: 'constructor'
+                    name: 'constructor',
+                    idlType: 'void',
                 })));
             }
         }

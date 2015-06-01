@@ -25,17 +25,15 @@ var _extractDag2 = _interopRequireDefault(_extractDag);
 
 function propagateMembersThroughHierarchy(astRoots) {
     return astRoots.toArray().concatMap(function (roots) {
-        var dag = (0, _extractDag2['default'])(roots.filter(function (node) {
+        var implementsNodes = roots.filter(function (node) {
             return node.type === 'implements';
-        }), function (node) {
+        });
+        var dag = (0, _extractDag2['default'])(implementsNodes, function (node) {
             return node[node.type === 'implements' ? 'target' : 'name'];
         }, function (node) {
             return node[node.type === 'implements' ? 'implements' : 'inheritance'];
         }, 'interface hierarchy');
 
-        var restNodes = roots.filter(function (node) {
-            return node.type !== 'implements';
-        });
         var restNodesMap = {};
 
         var nodeById = function nodeById(id) {
@@ -52,8 +50,16 @@ function propagateMembersThroughHierarchy(astRoots) {
 
         dag.order.forEach(function (id) {
             dag.edges[id].forEach(function (implementedId) {
-                nodeById(id).members = nodeById(id).members.concat(nodeById(implementedId).members);
+                try {
+                    nodeById(id).members = nodeById(id).members.concat(nodeById(implementedId).members);
+                } catch (e) {
+                    if (!e.message || e.message.indexOf('Name not found') === -1) throw e;
+                }
             });
+        });
+
+        var restNodes = roots.filter(function (node) {
+            return node.type !== 'implements' || !(node.target in restNodesMap) || !(node['implements'] in restNodesMap);
         });
 
         return _rx2['default'].Observable.from(restNodes);

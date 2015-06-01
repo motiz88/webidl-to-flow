@@ -3,6 +3,7 @@
 import Rx from 'rx';
 import assert from 'assert';
 // import notImplemented from './notImplemented';
+import t from '../FormattingToken';
 
 var literal = Rx.Observable.of;
 
@@ -45,5 +46,5 @@ function translateType(node: IdlType | string | {
     if (typeof node.idlType === 'string')
         return translateType(node.idlType);
     else
-        return literal(`/* ${JSON.stringify(node)}*/`);
+        return literal(t.enterComment, JSON.stringify(node), t.exitComment);
 }

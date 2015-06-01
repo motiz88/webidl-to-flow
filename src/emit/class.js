@@ -26,8 +26,7 @@ function emitClass(node: {
         assert(!node.extAttrs.some(subnode => subnode.name === 'Constructor'), `Type ${node.name} has illegal combination: [NoInterfaceObject] and [Constructor]`);
         assert(!node.members.some(subnode => subnode.name === 'constructor'), `Type ${node.name} has illegal combination: [NoInterfaceObject] and constructor`);
     }
-
-    return literal(`/* WebIDL: ${node.partial ? 'partial ' : ''}${node.type} ${node.name} */`)
+    return literal(t.enterComment, `WebIDL: ${node.partial ? 'partial ' : ''}${node.type} ${node.name}`, t.exitComment)
         .concat(literal(t.newlineIndent))
         .concat(literal(isNoInterfaceObject ? `type ${node.name} = ` : `declare class ${node.name} `))
         .concat(concatIfAny(emitInheritance(node), literal(' ')))

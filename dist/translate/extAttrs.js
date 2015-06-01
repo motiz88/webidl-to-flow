@@ -20,6 +20,10 @@ var _emitExtAttr = require('../emit/extAttr');
 
 var _emitExtAttr2 = _interopRequireDefault(_emitExtAttr);
 
+var _FormattingToken = require('../FormattingToken');
+
+var _FormattingToken2 = _interopRequireDefault(_FormattingToken);
+
 var literal = _rx2['default'].Observable.of;
 
 function translateExtAttrs(_x) {
@@ -37,9 +41,9 @@ function translateExtAttrs(_x) {
 
         if (!node.length) return _rx2['default'].Observable.empty();
 
-        return literal('/* [').concat(_rx2['default'].Observable.from(node).concatMap(function (subnode) {
+        return literal(_FormattingToken2['default'].enterComment, '[').concat(_rx2['default'].Observable.from(node).concatMap(function (subnode) {
             return _rx2['default'].Observable.concat((0, _emitExtAttr2['default'])(subnode), literal(', '));
-        }).skipLast(1), literal('] */'));
+        }).skipLast(1), literal(']', _FormattingToken2['default'].exitComment));
     }
 }
 

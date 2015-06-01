@@ -63,7 +63,9 @@ function processIdlFiles(inputs) {
         return _rxNode2['default'].fromReadableStream(readable).toArray().map(function (arr) {
             return arr.join('');
         });
-    }).concatMap(_parseIdlSource2['default']).concatMap(_translateIdlAst2['default']).forEach(function (s) {
+    }).concatMap(_parseIdlSource2['default']).concatMap(function (roots) {
+        return _rx2['default'].Observable.from(roots);
+    }).toArray().concatMap(_translateIdlAst2['default']).forEach(function (s) {
         return process.stdout.write(s);
     }, function (err) {
         return console.error(err.stack || err);

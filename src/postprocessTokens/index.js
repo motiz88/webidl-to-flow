@@ -8,14 +8,14 @@ default
 
 function postprocessTokens(tokens: Rx.Observable): Rx.Observable {
     return Rx.Observable.create(observer => {
-
-        var depth = 0;
+        var commentDepth = 0;
+        var indentDepth = 0;
         var indentElement = "    ";
         var lineStartFlag = true;
 
         var handleLineStart = () => {
             if (lineStartFlag) {
-                for (var i = 0; i < depth; ++i)
+                for (var i = 0; i < indentDepth; ++i)
                     observer.onNext(indentElement);
                 lineStartFlag = false;
             }
@@ -41,12 +41,26 @@ function postprocessTokens(tokens: Rx.Observable): Rx.Observable {
                         if (!lineStartFlag)
                             observer.onNext('\n');
                         lineStartFlag = true;
-                        ++depth;
+                        ++indentDepth;
                     } else if (token === t.indentLess) {
                         if (!lineStartFlag)
                             observer.onNext('\n');
                         lineStartFlag = true;
-                        --depth;
+                        --indentDepth;
+                    } else if (token === t.enterComment) {
+                        handleLineStart();
+                        if (commentDepth === 0)
+                            observer.onNext('/* ');
+                        else
+                            observer.onNext('/^ ');
+                        ++commentDepth;
+                    } else if (token === t.exitComment) {
+                        handleLineStart();
+                        if (commentDepth === 1)
+                            observer.onNext(' */');
+                        else
+                            observer.onNext(' ^/');
+                        --commentDepth;
                     } else if (typeof token === 'string') {
                         if (token.length)
                             handleLineStart();
@@ -54,8 +68,7 @@ function postprocessTokens(tokens: Rx.Observable): Rx.Observable {
                     } else
                         assert(false, 'Invalid token: ' + util.inspect(token));
                 },
-                err => observer.onError(err),
-                () => observer.onCompleted()
+                err => observer.onError(err), () => observer.onCompleted()
             );
     });
 }

@@ -15,15 +15,17 @@
     "load-grunt-tasks": "^3.2.0"
   },
   "dependencies": {
-    "@motiz88/webidl2": "^2.0.10-1",
+    "@motiz88/webidl2": "^2.0.13",
     "array-unique": "^0.2.1",
     "babel-runtime": "^5.4.7",
     "clone": "^1.0.2",
     "commander": "^2.8.1",
     "depres": "^0.1.0",
     "glob": "^5.0.10",
+    "lodash": "^3.9.3",
     "mz": "^2.0.0",
     "request": "^2.56.0",
+    "reserved": "^0.1.2",
     "rx": "^2.5.2",
     "rx-node": "^1.0.0"
   }

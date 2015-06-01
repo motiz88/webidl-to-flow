@@ -14,7 +14,7 @@ export
 default
 
 function translateInterface(node: IdlInterface): Rx.Observable {
-    assert(node.type === 'interface',
+    assert(node.type === 'interface' || node.type === 'class',
         `Expected IdlInterface, found ${node.type}`);
     return concatIfAny(translateExtAttrs(node), literal(t.newlineIndent))
         .concat(emitClass(node, translateInterfaceMember));

@@ -36,8 +36,16 @@ var _mergePartials = require('./mergePartials');
 
 var _mergePartials2 = _interopRequireDefault(_mergePartials);
 
+var _hoistNestedTypedefs = require('./hoistNestedTypedefs');
+
+var _hoistNestedTypedefs2 = _interopRequireDefault(_hoistNestedTypedefs);
+
+var _transformMemberLists = require('./transformMemberLists');
+
+var _transformMemberLists2 = _interopRequireDefault(_transformMemberLists);
+
 function preprocessAst(astRoots) {
-    return astRoots['let'](_mergePartials2['default'])['let'](_flattenCallbackInterfaces2['default'])['let'](_propagateMembersThroughHierarchy2['default'])['let'](_purgeNoInterfaceObjects2['default'])
+    return astRoots['let'](_hoistNestedTypedefs2['default'])['let'](_mergePartials2['default'])['let'](_flattenCallbackInterfaces2['default'])['let'](_transformMemberLists2['default'])['let'](_propagateMembersThroughHierarchy2['default'])['let'](_purgeNoInterfaceObjects2['default'])
     // .let(propagateImplements)
     ['let'](_concretizeConstructors2['default'])['let'](_concretizeNamedConstructors2['default']);
 }

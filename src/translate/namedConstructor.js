@@ -15,7 +15,7 @@ function translateNamedConstructor(node: IdlOperation): Rx.Observable {
     assert(node.type === 'named constructor',
         `Expected named constructor, found ${node.type}`);
 
-    return literal('/* WebIDL: named constructor */',
+    return literal(t.enterComment, 'WebIDL: named constructor', t.exitComment,
         t.newlineIndent,
         'declare function '
     ).concat(emitMethod(node));

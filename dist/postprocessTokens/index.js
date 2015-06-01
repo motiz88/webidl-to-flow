@@ -28,14 +28,14 @@ var _rx2 = _interopRequireDefault(_rx);
 
 function postprocessTokens(tokens) {
     return _rx2['default'].Observable.create(function (observer) {
-
-        var depth = 0;
+        var commentDepth = 0;
+        var indentDepth = 0;
         var indentElement = '    ';
         var lineStartFlag = true;
 
         var handleLineStart = function handleLineStart() {
             if (lineStartFlag) {
-                for (var i = 0; i < depth; ++i) observer.onNext(indentElement);
+                for (var i = 0; i < indentDepth; ++i) observer.onNext(indentElement);
                 lineStartFlag = false;
             }
         };
@@ -56,11 +56,19 @@ function postprocessTokens(tokens) {
             } else if (token === _FormattingToken2['default'].indentMore) {
                 if (!lineStartFlag) observer.onNext('\n');
                 lineStartFlag = true;
-                ++depth;
+                ++indentDepth;
             } else if (token === _FormattingToken2['default'].indentLess) {
                 if (!lineStartFlag) observer.onNext('\n');
                 lineStartFlag = true;
-                --depth;
+                --indentDepth;
+            } else if (token === _FormattingToken2['default'].enterComment) {
+                handleLineStart();
+                if (commentDepth === 0) observer.onNext('/* ');else observer.onNext('/^ ');
+                ++commentDepth;
+            } else if (token === _FormattingToken2['default'].exitComment) {
+                handleLineStart();
+                if (commentDepth === 1) observer.onNext(' */');else observer.onNext(' ^/');
+                --commentDepth;
             } else if (typeof token === 'string') {
                 if (token.length) handleLineStart();
                 observer.onNext(token);

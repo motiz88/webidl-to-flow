@@ -35,6 +35,8 @@ function processIdlFiles(inputs: Array < string > ): void {
                 .toArray().map(arr => arr.join(""));
         })
         .concatMap(parseIdlSource)
+        .concatMap(roots => Rx.Observable.from(roots))
+        .toArray()
         .concatMap(translateIdlAst)
         .forEach(s => process.stdout.write(s), err => console.error(err.stack || err), () => process.stdout.write('\n\n'));
 }

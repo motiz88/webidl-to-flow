@@ -53,14 +53,16 @@ var _namedConstructor = require('./namedConstructor');
 
 var _namedConstructor2 = _interopRequireDefault(_namedConstructor);
 
-// `implements` declarations are removed by preprocessAst, so just stub it out here
+var _implements = require('./implements');
 
-var _notImplemented3 = _interopRequireDefault(_notImplemented);
+var _implements2 = _interopRequireDefault(_implements);
 
 function translateRoot(node) {
-    (0, _assert2['default'])(node.type === 'interface' || node.type === 'callback interface' || node.type === 'exception' || node.type === 'enum' || node.type === 'typedef' || node.type === 'callback' || node.type === 'dictionary' || node.type === 'implements' || node.type === 'named constructor', 'Expected IdlRootDefinition, found ' + node.type);
+    (0, _assert2['default'])(node.type === 'interface' || node.type === 'class' || node.type === 'callback interface' || node.type === 'exception' || node.type === 'enum' || node.type === 'typedef' || node.type === 'callback' || node.type === 'dictionary' || node.type === 'implements' || node.type === 'named constructor', 'Expected IdlRootDefinition, found ' + node.type);
     switch (node.type) {
         case 'interface':
+        /* falls through */
+        case 'class':
             return (0, _interface2['default'])(node);
         case 'callback interface':
             return (0, _callbackInterface2['default'])(node);
@@ -75,7 +77,7 @@ function translateRoot(node) {
         case 'dictionary':
             return (0, _dictionary2['default'])(node);
         case 'implements':
-            return (0, _notImplemented3['default'])(node);
+            return (0, _implements2['default'])(node);
         case 'named constructor':
             // These are inserted by preprocessAst, NOT by webidl2.js
             return (0, _namedConstructor2['default'])(node);

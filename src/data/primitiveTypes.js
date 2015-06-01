@@ -18,6 +18,8 @@ var primitiveTypes = {
     USVString: 'string',
     object: 'Object',
     sequence: 'Array',
+
+    DOMTimeStamp: 'number',
 };
 export
 default primitiveTypes;

@@ -9,7 +9,7 @@ type IdlType = {
 };
 
 type IdlInterface = {
-    "type": string, // always "interface"
+    "type": string, // "interface" or "class"
     name: string,
     partial: boolean,
     members: Array < IdlInterfaceMember > ,
@@ -172,7 +172,7 @@ type IdlConstantValue = {
     negative: ? boolean,
 }
 
-type IdlInterfaceMember = IdlIterator | IdlOperation | IdlSerializer | IdlConstant;
+type IdlInterfaceMember = IdlIterator | IdlOperation | IdlSerializer | IdlConstant | IdlIterablelike;
 type IdlRootDefinition = IdlInterface | IdlCallbackInterface | IdlException | IdlEnum | IdlTypedef | IdlCallback | IdlDictionary | IdlImplements;
 
 type IdlArgument = {
@@ -182,6 +182,34 @@ type IdlArgument = {
     idlType: IdlType,
     name: string,
 };
+
+type IdlIterable = {
+    "type": string, // always "iterable"
+    idlType: IdlType | [IdlType, IdlType],
+    extAttrs: Array < IdlExtAttr >    
+};
+
+type IdlLegacyIterable = {
+    "type": string, // always "legacyiterable"
+    idlType: IdlType,
+    extAttrs: Array < IdlExtAttr >    
+};
+
+type IdlSetLike = {
+    "type": string, // always "setlike"
+    idlType: IdlType,
+    readonly: boolean,
+    extAttrs: Array < IdlExtAttr >    
+};
+
+type IdlMapLike = {
+    "type": string, // always "maplike"
+    idlType: IdlType,
+    readonly: boolean,
+    extAttrs: [IdlType, IdlType]
+};
+
+type IdlIterablelike = IdlIterable | IdlLegacyIterable | IdlSetLike | IdlMapLike;
 
 type IdlAst = IdlRootDefinition;
 

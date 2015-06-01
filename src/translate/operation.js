@@ -17,19 +17,27 @@ function translateOperation(node: IdlOperation): Rx.Observable {
         `Expected IdlOperation, found ${node.type}`);
     assert(!(node.getter && node.setter), 'operation cannot be both a getter and a setter');
 
-    var decl = null;
+    if (node.name)
+        return emitMethod(node);
+    if (node.getter)
+        return emitIndexer(node);
+    if (node.setter)
+        return Rx.Observable.empty();
+    if (node.stringifier)
+        return translateOperation({
+            type: 'operation',
+            name: 'toString',
+            arguments: [],
+            idlType: 'DOMString'
+        });
 
-    if (node.getter) {
-        assert(node.arguments.length > 0);
-        decl = emitIndexer(node);
-    }
+    var what = "operation";
+    if (node.creator)
+        what = "creator";
+    if (node.deleter)
+        what = "deleter";
+    if (node.legacycaller)
+        what = "legacycaller";
+    return literal(t.enterComment, 'Not implemented: ', what, t.exitComment);
 
-    if (node.name) {
-        if (decl)
-            decl = decl.concat(literal(t.newlineIndent));
-        decl = Rx.Observable.concat(decl || Rx.Observable.empty(), emitMethod(node));
-    }
-
-
-    return decl || Rx.Observable.empty();
 }

@@ -33,7 +33,7 @@ var literal = _rx2['default'].Observable.of;
 function translateNamedConstructor(node) {
     (0, _assert2['default'])(node.type === 'named constructor', 'Expected named constructor, found ' + node.type);
 
-    return literal('/* WebIDL: named constructor */', _FormattingToken2['default'].newlineIndent, 'declare function ').concat((0, _emitMethod2['default'])(node));
+    return literal(_FormattingToken2['default'].enterComment, 'WebIDL: named constructor', _FormattingToken2['default'].exitComment, _FormattingToken2['default'].newlineIndent, 'declare function ').concat((0, _emitMethod2['default'])(node));
 }
 
 module.exports = exports['default'];

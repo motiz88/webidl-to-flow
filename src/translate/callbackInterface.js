@@ -17,7 +17,8 @@ function translateCallbackInterface(node: IdlCallbackInterface): Rx.Observable {
     assert(node.type === 'callback interface',
         `Expected IdlCallbackInterface, found ${node.type}`);
     assert(!node.inheritance, "IdlCallbackInterface should not have inheritance info here (AST should be preprocessed with flattenCallbackInterfaces)");
-    var decl = literal(`/* WebIDL: ${node.partial ? 'partial ' : ''}${node.type} ${node.name} */`,
+    var decl = literal(t.enterComment, `WebIDL: ${node.partial ? 'partial ' : ''}${node.type} ${node.name}`,
+            t.exitComment,
             t.newlineIndent,
             `type ${node.name} = `,
             t.openBrace

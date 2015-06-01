@@ -43,7 +43,7 @@ var _FormattingToken2 = _interopRequireDefault(_FormattingToken);
 var literal = _rx2['default'].Observable.of;
 
 function translateInterface(node) {
-    (0, _assert2['default'])(node.type === 'interface', 'Expected IdlInterface, found ' + node.type);
+    (0, _assert2['default'])(node.type === 'interface' || node.type === 'class', 'Expected IdlInterface, found ' + node.type);
     return (0, _concatIfAny2['default'])((0, _extAttrs2['default'])(node), literal(_FormattingToken2['default'].newlineIndent)).concat((0, _emitClass2['default'])(node, _interfaceMember2['default']));
 }
 

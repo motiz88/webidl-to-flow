@@ -16,8 +16,14 @@ var _rx = require('rx');
 
 var _rx2 = _interopRequireDefault(_rx);
 
+var _FormattingToken = require('../FormattingToken');
+
+var _FormattingToken2 = _interopRequireDefault(_FormattingToken);
+
+var literal = _rx2['default'].Observable.of;
+
 function notImplemented(node, reason) {
-    return _rx2['default'].Observable.of('/* Not implemented: ' + (node.type || node.idlType) + '' + (node.name ? ' ' + node.name : '') + '' + (reason ? ' (' + reason + ')' : '') + ' */');
+    return literal(_FormattingToken2['default'].enterComment, 'Not implemented: ' + (node.type || node.idlType) + '' + (node.name ? ' ' + node.name : '') + '' + (reason ? ' (' + reason + ')' : ''), _FormattingToken2['default'].exitComment);
 }
 
 module.exports = exports['default'];

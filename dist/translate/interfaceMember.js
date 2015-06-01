@@ -38,10 +38,14 @@ var _typedef = require('./typedef');
 
 var _typedef2 = _interopRequireDefault(_typedef);
 
+var _iterablelike = require('./iterablelike');
+
+var _iterablelike2 = _interopRequireDefault(_iterablelike);
+
 var _notImplemented4 = _interopRequireDefault(_notImplemented);
 
 function translateInterfaceMember(node) {
-    (0, _assert2['default'])(node.type === 'iterator' || node.type === 'operation' || node.type === 'serializer' || node.type === 'const' || node.type === 'attribute' || node.type === 'typedef', 'Expected IdlInterfaceMember, found ' + node.type);
+    (0, _assert2['default'])(node.type === 'iterator' || node.type === 'operation' || node.type === 'serializer' || node.type === 'const' || node.type === 'attribute' || node.type === 'typedef' || node.type === 'iterable' || node.type === 'legacyiterable' || node.type === 'setlike' || node.type === 'maplike', 'Expected IdlInterfaceMember, found ' + node.type);
     switch (node.type) {
         case 'iterator':
             return (0, _notImplemented2['default'])(node);
@@ -55,6 +59,14 @@ function translateInterfaceMember(node) {
             return (0, _attribute2['default'])(node);
         case 'typedef':
             return (0, _typedef2['default'])(node);
+        case 'iterable':
+        /* falls through */
+        case 'legacyiterable':
+        /* falls through */
+        case 'setlike':
+        /* falls through */
+        case 'maplike':
+            return (0, _iterablelike2['default'])(node);
         default:
             return (0, _notImplemented4['default'])(node);
     }

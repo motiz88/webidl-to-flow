@@ -20,6 +20,12 @@ var _assert = require('assert');
 
 var _assert2 = _interopRequireDefault(_assert);
 
+// import notImplemented from './notImplemented';
+
+var _FormattingToken = require('../FormattingToken');
+
+var _FormattingToken2 = _interopRequireDefault(_FormattingToken);
+
 var _unionType = require('./unionType');
 
 var _unionType2 = _interopRequireDefault(_unionType);
@@ -31,8 +37,6 @@ var _arrayType2 = _interopRequireDefault(_arrayType);
 var _dataPrimitiveTypes = require('../data/primitiveTypes');
 
 var _dataPrimitiveTypes2 = _interopRequireDefault(_dataPrimitiveTypes);
-
-// import notImplemented from './notImplemented';
 
 var literal = _rx2['default'].Observable.of;
 
@@ -68,7 +72,7 @@ function translateType(_x) {
             _x = node.idlType;
             _again = true;
             continue _function;
-        } else return literal('/* ' + JSON.stringify(node) + '*/');
+        } else return literal(_FormattingToken2['default'].enterComment, JSON.stringify(node), _FormattingToken2['default'].exitComment);
     }
 }
 

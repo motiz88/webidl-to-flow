@@ -10,12 +10,12 @@ default
 
 function propagateMembersThroughHierarchy(astRoots: Rx.Observable): Rx.Observable {
     return astRoots.toArray().concatMap(roots => {
-        var dag = extractDag(roots.filter(node => node.type === 'implements'),
+        var implementsNodes = roots.filter(node => node.type === 'implements');
+        var dag = extractDag(implementsNodes,
             node => node[node.type === 'implements' ? 'target' : 'name'],
             node => node[node.type === 'implements' ? 'implements' : 'inheritance'],
             'interface hierarchy');
 
-        var restNodes = roots.filter(node => node.type !== 'implements');
         var restNodesMap = {};
 
         var nodeById = (id) => {
@@ -33,9 +33,16 @@ function propagateMembersThroughHierarchy(astRoots: Rx.Observable): Rx.Observabl
 
         dag.order.forEach(id => {
             dag.edges[id].forEach(implementedId => {
-                nodeById(id).members = nodeById(id).members.concat(nodeById(implementedId).members);
+                try {
+                    nodeById(id).members = nodeById(id).members.concat(nodeById(implementedId).members);
+                } catch (e) {
+                    if (!e.message || e.message.indexOf('Name not found') === -1)
+                        throw e;
+                }
             });
         });
+
+        var restNodes = roots.filter(node => node.type !== 'implements' || !(node.target in restNodesMap) || !(node.implements in restNodesMap));
 
         return Rx.Observable.from(restNodes);
     });

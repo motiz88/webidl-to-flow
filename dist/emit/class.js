@@ -51,8 +51,7 @@ function emitClass(node, nodeMapper) {
             return subnode.name === 'constructor';
         }), 'Type ' + node.name + ' has illegal combination: [NoInterfaceObject] and constructor');
     }
-
-    return literal('/* WebIDL: ' + (node.partial ? 'partial ' : '') + '' + node.type + ' ' + node.name + ' */').concat(literal(_FormattingToken2['default'].newlineIndent)).concat(literal(isNoInterfaceObject ? 'type ' + node.name + ' = ' : 'declare class ' + node.name + ' ')).concat((0, _concatIfAny2['default'])((0, _inheritance2['default'])(node), literal(' '))).concat(literal(_FormattingToken2['default'].openBrace)).concat((0, _members2['default'])(_rx2['default'].Observable.from(node.members), nodeMapper)).concat(literal(_FormattingToken2['default'].closeBrace), literal(isNoInterfaceObject ? ';' : ''));
+    return literal(_FormattingToken2['default'].enterComment, 'WebIDL: ' + (node.partial ? 'partial ' : '') + '' + node.type + ' ' + node.name, _FormattingToken2['default'].exitComment).concat(literal(_FormattingToken2['default'].newlineIndent)).concat(literal(isNoInterfaceObject ? 'type ' + node.name + ' = ' : 'declare class ' + node.name + ' ')).concat((0, _concatIfAny2['default'])((0, _inheritance2['default'])(node), literal(' '))).concat(literal(_FormattingToken2['default'].openBrace)).concat((0, _members2['default'])(_rx2['default'].Observable.from(node.members), nodeMapper)).concat(literal(_FormattingToken2['default'].closeBrace), literal(isNoInterfaceObject ? ';' : ''));
 }
 
 module.exports = exports['default'];

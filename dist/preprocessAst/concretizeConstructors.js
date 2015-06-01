@@ -47,8 +47,8 @@ function concretizeConstructors(astRoots) {
                     return _Object$assign({
                         type: 'operation'
                     }, attr, {
-                        name: 'constructor'
-                    });
+                        name: 'constructor',
+                        idlType: 'void' });
                 })));
             }
         }

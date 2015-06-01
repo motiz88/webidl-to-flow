@@ -2,6 +2,7 @@
 
 import Rx from 'rx';
 import emitExtAttr from '../emit/extAttr';
+import t from '../FormattingToken';
 var literal = Rx.Observable.of;
 
 export
@@ -16,11 +17,11 @@ function translateExtAttrs(node: Array < IdlExtAttr > | {
     if (!node.length)
         return Rx.Observable.empty();
 
-    return literal('/* [')
+    return literal(t.enterComment, '[')
         .concat(Rx.Observable.from(node)
             .concatMap(subnode =>
                 Rx.Observable.concat(emitExtAttr(subnode), literal(', '))
             ).skipLast(1),
-            literal('] */')
+            literal(']', t.exitComment)
         );
 }

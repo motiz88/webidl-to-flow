@@ -25,7 +25,9 @@ var primitiveTypes = {
     ByteString: 'string',
     USVString: 'string',
     object: 'Object',
-    sequence: 'Array' };
+    sequence: 'Array',
+
+    DOMTimeStamp: 'number' };
 exports['default'] = primitiveTypes;
 module.exports = exports['default'];
 //# sourceMappingURL=primitiveTypes.js.map
